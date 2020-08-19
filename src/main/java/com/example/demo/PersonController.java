@@ -10,7 +10,7 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepository;
 
-    @GetMapping("/v1/persons0")
+    @GetMapping("/v1/persons")
     public Iterable<Person> getAllUsers() {
         // This returns a JSON or XML with the users
         return personRepository.findAllByDeletedIsFalse();
@@ -18,8 +18,6 @@ public class PersonController {
 
     @PostMapping("/v1/persons")
     public String insertPerson(@RequestParam String name, @RequestParam Integer personId) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
 
         Person person = new Person();
         person.setName(name);
@@ -29,9 +27,7 @@ public class PersonController {
     }
 
     @PutMapping("/v1/persons/{id}")
-    public String updatePerson(@RequestBody Person person, @RequestParam("id") Integer id) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
+    public String updatePerson(@RequestBody Person person, @PathVariable Integer id) {
 
         Person personSave = personRepository.findOneByIdAndDeletedIsFalse(id);
         System.out.println("Pessoa encontrado.");
@@ -40,10 +36,8 @@ public class PersonController {
         return "saved";
     }
 
-    @DeleteMapping("/v1/persons/")
-    public String deletePerson(@RequestParam("id") Integer id) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
+    @DeleteMapping("/v1/persons/{id}")
+    public String deletePerson(@PathVariable("id") Integer id) {
 
         Person personDelete = personRepository.findOneByIdAndDeletedIsFalse(id);
         System.out.println("Pessoa encontrado.");
