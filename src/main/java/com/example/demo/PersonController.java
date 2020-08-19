@@ -22,7 +22,7 @@ public class PersonController {
         Person personSave = new Person();
         personSave.setName(person.getName());
         personRepository.save(personSave);
-        return "Saved";
+        return "Post concluido";
     }
 
     @PutMapping("/v1/persons/{id}")
