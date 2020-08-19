@@ -17,12 +17,11 @@ public class PersonController {
     }
 
     @PostMapping("/v1/persons")
-    public String insertPerson(@RequestParam String name, @RequestParam Integer personId) {
+    public String insertPerson(@RequestBody Person person) {
 
-        Person person = new Person();
-        person.setName(name);
-        person.setId(personId);
-        personRepository.save(person);
+        Person personSave = new Person();
+        personSave.setName(person.getName());
+        personRepository.save(personSave);
         return "Saved";
     }
 
