@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class PersonController {
         Person personSave = new Person();
         personSave.setName(person.getName());
         personRepository.save(personSave);
-        return "Post concluido";
+        return JSONObject.quote("Post concluido");
     }
 
     @PutMapping("/v1/persons/{id}")
