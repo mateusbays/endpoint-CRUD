@@ -1,7 +1,8 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,32 +18,25 @@ public class PersonController {
     }
 
     @PostMapping("/v1/persons")
-    public String insertPerson(@RequestBody Person person) {
-
-        Person personSave = new Person();
-        personSave.setName(person.getName());
-        personRepository.save(personSave);
-        return "Saved";
+    public Person insertPerson(@RequestBody Person person) {
+            Person personSave = new Person();
+            personSave.setName(person.getName());
+            return personRepository.save(personSave);
     }
 
     @PutMapping("/v1/persons/{id}")
-    public String updatePerson(@RequestBody Person person, @PathVariable Integer id) {
-
-        Person personSave = personRepository.findOneByIdAndDeletedIsFalse(id);
-        System.out.println("Pessoa encontrado.");
-        personSave.setName(person.getName());
-        personRepository.save(personSave);
-        return "saved";
+    public Person updatePerson(@RequestBody Person person, @PathVariable Integer id)  {
+            Person personSave = personRepository.findOneByIdAndDeletedIsFalse(id);
+            personSave.setName(person.getName());
+            return personRepository.save(personSave);
     }
 
     @DeleteMapping("/v1/persons/{id}")
-    public String deletePerson(@PathVariable("id") Integer id) {
-
-        Person personDelete = personRepository.findOneByIdAndDeletedIsFalse(id);
-        System.out.println("Pessoa encontrado.");
-        personDelete.setDeleted(true);
-        personRepository.save(personDelete);
-        return "saved";
+    public Person deletePerson(@PathVariable("id") Integer id) {
+            Person personDelete = personRepository.findOneByIdAndDeletedIsFalse(id);
+            System.out.println("Pessoa encontrado.");
+            personDelete.setDeleted(true);
+            return personRepository.save(personDelete);
     }
 
 }
